@@ -5,6 +5,7 @@ const nextConfig = {
   output: 'export',
   basePath: '/portofolio',
   distDir: 'out',
+  assetPrefix: '/portofolio/',
   images: {
     unoptimized: true,
     remotePatterns: [
@@ -17,6 +18,7 @@ const nextConfig = {
         hostname: '**',
       }
     ],
+    domains: ['github.com', 'raw.githubusercontent.com'],
   },
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',

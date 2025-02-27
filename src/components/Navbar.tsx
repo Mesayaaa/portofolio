@@ -1,9 +1,9 @@
 "use client";
 
-import { memo, useCallback, useState, useEffect } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
+import Link from "./Link";
+import Image from "./Image";
+import { motion } from "framer-motion";
 import { useTheme } from "@/contexts/ThemeContext";
 import { FiMenu, FiX, FiChevronRight } from "react-icons/fi";
 import { IconType } from "react-icons";
@@ -68,91 +68,65 @@ const MemoizedSocialLink = memo(function SocialLink({
 });
 
 function Navbar({ navigationItems, socialLinks }: NavbarProps) {
-  const pathname = usePathname();
-  const { theme, toggleTheme } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [prevScrollY, setPrevScrollY] = useState(0);
-  const [isVisible, setIsVisible] = useState(true);
+  const { theme, toggleTheme } = useTheme();
   const isBrowser = useIsBrowser();
 
-  const handleScroll = useCallback(() => {
-    if (!isBrowser) return;
-    const currentScrollY = window.scrollY;
-    setIsVisible(prevScrollY > currentScrollY || currentScrollY < 50);
-    setIsScrolled(currentScrollY > 0);
-    setPrevScrollY(currentScrollY);
-  }, [prevScrollY, isBrowser]);
-
   useEffect(() => {
-    if (!isBrowser) return;
-
-    let rafId: number;
-    const onScroll = () => {
-      rafId = requestAnimationFrame(handleScroll);
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
     };
 
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      cancelAnimationFrame(rafId);
-    };
-  }, [handleScroll, isBrowser]);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <motion.header
-      initial={{ y: 0 }}
-      animate={{ y: isVisible ? 0 : -100 }}
-      transition={{ duration: 0.2 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300
-        ${
-          isScrolled
-            ? "shadow-lg backdrop-blur-xl bg-white/70 dark:bg-gray-900/70 border-b border-gray-200/20 dark:border-gray-700/20"
-            : "bg-transparent"
-        }`}
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? "bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-lg"
+          : "bg-transparent"
+      }`}
     >
-      <nav className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center space-x-8">
-          {navigationItems.map((item) => (
-            <MemoizedLink
-              key={item.href}
-              href={item.href}
-              label={item.name}
-              isActive={pathname === item.href}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo */}
+          <Link href="/" className="flex items-center space-x-2">
+            <Image
+              src="/images/logo.png"
+              alt="Logo"
+              width={40}
+              height={40}
+              className="rounded-full"
             />
-          ))}
-        </div>
+            <span className="font-bold text-xl">Portfolio</span>
+          </Link>
 
-        <div className="flex items-center space-x-4">
-          {socialLinks.map((link) => (
-            <MemoizedSocialLink
-              key={link.href}
-              href={link.href}
-              Icon={link.icon}
-              label={link.label}
-            />
-          ))}
+          {/* Navigation Links */}
+          <div className="hidden md:flex items-center space-x-8">
+            {navigationItems.map((item) => (
+              <MemoizedLink
+                key={item.href}
+                href={item.href}
+                label={item.name}
+                isActive={item.href === "/"}
+              />
+            ))}
+          </div>
+
+          {/* Theme Toggle */}
           <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
             onClick={toggleTheme}
-            className="p-3 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            aria-label="Toggle theme"
+            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
           >
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.div
-                key={theme}
-                initial={{ opacity: 0, rotate: -30 }}
-                animate={{ opacity: 1, rotate: 0 }}
-                exit={{ opacity: 0, rotate: 30 }}
-                transition={{ duration: 0.2 }}
-              >
-                {theme === "dark" ? "🌙" : "☀️"}
-              </motion.div>
-            </AnimatePresence>
+            {theme === "dark" ? "🌞" : "🌙"}
           </motion.button>
         </div>
-      </nav>
-    </motion.header>
+      </div>
+    </nav>
   );
 }
 
