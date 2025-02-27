@@ -16,6 +16,7 @@ import {
   SiAdobexd,
 } from "react-icons/si";
 import { useRef } from "react";
+import { smoothScroll } from "@/utils/smoothScroll";
 
 const skills = [
   {
