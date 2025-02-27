@@ -22,6 +22,7 @@ import {
 } from "react-icons/fi";
 import { useInView } from "react-intersection-observer";
 import { TypeAnimation } from "react-type-animation";
+import { useIsBrowser } from "@/hooks/useIsBrowser";
 
 // Lazy load heavy components
 const Canvas = dynamic(
@@ -63,8 +64,10 @@ const Hero: FC = () => {
     threshold: 0.1,
     triggerOnce: true,
   });
+  const isBrowser = useIsBrowser();
 
   useEffect(() => {
+    if (!isBrowser) return;
     setMounted(true);
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -88,7 +91,7 @@ const Hero: FC = () => {
       }
       setMounted(false);
     };
-  }, []);
+  }, [isBrowser]);
 
   const { scrollY } = useScroll();
   const y1 = useTransform(scrollY, [0, 300], [0, 50]);
@@ -116,6 +119,10 @@ const Hero: FC = () => {
       },
     },
   };
+
+  if (!isBrowser) {
+    return null; // or a loading state
+  }
 
   return (
     <section

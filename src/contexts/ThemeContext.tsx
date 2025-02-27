@@ -1,6 +1,7 @@
 "use client";
 
 import React, { createContext, useState, useContext, useEffect } from "react";
+import { useIsBrowser } from "@/hooks/useIsBrowser";
 
 type Theme = "light" | "dark";
 
@@ -17,10 +18,13 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<Theme>("light");
   const [isSystemTheme, setIsSystemTheme] = useState(true);
+  const isBrowser = useIsBrowser();
 
   const applyTheme = (newTheme: Theme, isSystem: boolean = false) => {
     setThemeState(newTheme);
     setIsSystemTheme(isSystem);
+
+    if (!isBrowser) return;
 
     if (!isSystem) {
       localStorage.setItem("theme", newTheme);
@@ -41,6 +45,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   };
 
   useEffect(() => {
+    if (!isBrowser) return;
+
     // Initialize theme based on stored preferences
     const storedTheme = localStorage.getItem("theme") as Theme;
     const useSystemTheme = localStorage.getItem("useSystemTheme") === "true";
@@ -63,7 +69,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     return () => {
       mediaQuery.removeEventListener("change", handleSystemThemeChange);
     };
-  }, []);
+  }, [isBrowser]);
 
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";

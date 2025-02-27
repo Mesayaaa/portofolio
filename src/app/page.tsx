@@ -12,12 +12,16 @@ import BackToTop from "@/components/BackToTop";
 import LoadingScreen from "@/components/LoadingScreen";
 import PageTransition from "@/components/PageTransition";
 import { ScrollReveal } from "@/components/ScrollWrapper";
+import { useIsBrowser } from "@/hooks/useIsBrowser";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
+  const isBrowser = useIsBrowser();
 
   useEffect(() => {
+    if (!isBrowser) return;
+
     let mounted = true;
 
     const loadResources = async () => {
@@ -50,7 +54,11 @@ export default function Home() {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [isBrowser]);
+
+  if (!isBrowser) {
+    return null; // or a loading state
+  }
 
   if (isLoading) {
     return <LoadingScreen progress={loadingProgress} />;
@@ -58,66 +66,15 @@ export default function Home() {
 
   return (
     <PageTransition>
-      <div className="min-h-screen">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <ScrollReveal id="home">
-            <section id="home">
-              <Hero />
-            </section>
-          </ScrollReveal>
-
-          <ScrollReveal
-            id="about"
-            className="bg-gradient-to-b from-white via-gray-50 to-blue-50/30 dark:from-gray-900 dark:to-gray-800"
-          >
-            <section id="about">
-              <About />
-            </section>
-          </ScrollReveal>
-
-          <ScrollReveal
-            id="skills"
-            className="bg-gradient-to-b from-gray-50 via-white to-blue-50/30 dark:from-gray-800 dark:to-gray-900"
-          >
-            <section id="skills">
-              <Skills />
-            </section>
-          </ScrollReveal>
-
-          <ScrollReveal
-            id="projects"
-            className="bg-gradient-to-b from-white via-gray-50 to-blue-50/30 dark:from-gray-900 dark:to-gray-800"
-          >
-            <section id="projects">
-              <Projects />
-            </section>
-          </ScrollReveal>
-
-          <ScrollReveal
-            id="experience"
-            className="bg-gradient-to-b from-gray-50 via-white to-blue-50/30 dark:from-gray-800 dark:to-gray-900"
-          >
-            <section id="experience">
-              <Experience />
-            </section>
-          </ScrollReveal>
-
-          <ScrollReveal
-            id="contact"
-            className="bg-gradient-to-b from-white via-gray-50 to-blue-50/30 dark:from-gray-900 dark:to-gray-800"
-          >
-            <section id="contact">
-              <Contact />
-            </section>
-          </ScrollReveal>
-
-          <BackToTop />
-        </motion.div>
-      </div>
+      <ScrollReveal>
+        <Hero />
+        <About />
+        <Skills />
+        <Projects />
+        <Experience />
+        <Contact />
+        <BackToTop />
+      </ScrollReveal>
     </PageTransition>
   );
 }

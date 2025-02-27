@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiArrowUp } from "react-icons/fi";
+import { useIsBrowser } from "@/hooks/useIsBrowser";
 
 export default function BackToTop() {
   const [isVisible, setIsVisible] = useState(false);
+  const isBrowser = useIsBrowser();
 
   useEffect(() => {
+    if (!isBrowser) return;
+
     const toggleVisibility = () => {
       if (window.pageYOffset > 300) {
         setIsVisible(true);
@@ -19,14 +23,17 @@ export default function BackToTop() {
     return () => {
       window.removeEventListener("scroll", toggleVisibility);
     };
-  }, []);
+  }, [isBrowser]);
 
   const scrollToTop = () => {
+    if (!isBrowser) return;
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
   };
+
+  if (!isBrowser) return null;
 
   return (
     <AnimatePresence>

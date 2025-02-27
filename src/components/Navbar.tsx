@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "@/contexts/ThemeContext";
 import { FiMenu, FiX, FiChevronRight } from "react-icons/fi";
 import { IconType } from "react-icons";
+import { useIsBrowser } from "@/hooks/useIsBrowser";
 
 interface NavbarProps {
   navigationItems: { name: string; href: string }[];
@@ -72,15 +73,19 @@ function Navbar({ navigationItems, socialLinks }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [prevScrollY, setPrevScrollY] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
+  const isBrowser = useIsBrowser();
 
   const handleScroll = useCallback(() => {
+    if (!isBrowser) return;
     const currentScrollY = window.scrollY;
     setIsVisible(prevScrollY > currentScrollY || currentScrollY < 50);
     setIsScrolled(currentScrollY > 0);
     setPrevScrollY(currentScrollY);
-  }, [prevScrollY]);
+  }, [prevScrollY, isBrowser]);
 
   useEffect(() => {
+    if (!isBrowser) return;
+
     let rafId: number;
     const onScroll = () => {
       rafId = requestAnimationFrame(handleScroll);
@@ -91,7 +96,7 @@ function Navbar({ navigationItems, socialLinks }: NavbarProps) {
       window.removeEventListener("scroll", onScroll);
       cancelAnimationFrame(rafId);
     };
-  }, [handleScroll]);
+  }, [handleScroll, isBrowser]);
 
   return (
     <motion.header
