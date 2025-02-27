@@ -3,9 +3,11 @@
 import React, { Suspense } from "react";
 import dynamic from "next/dynamic";
 import ClientOnly from "@/components/ClientOnly";
+import LoadingFallback from "@/components/LoadingFallback";
+import ErrorBoundary from "@/components/ErrorBoundary";
 
 // Loading fallbacks
-const LoadingFallback = () => (
+const LoadingFallbackComponent = () => (
   <div className="min-h-screen flex items-center justify-center">
     Loading...
   </div>
@@ -14,27 +16,27 @@ const LoadingFallback = () => (
 // Dynamic imports with loading fallbacks
 const Hero = dynamic(() => import("@/components/Hero"), {
   ssr: false,
-  loading: () => <LoadingFallback />,
+  loading: () => <LoadingFallbackComponent />,
 });
 const About = dynamic(() => import("@/components/About"), {
   ssr: false,
-  loading: () => <LoadingFallback />,
+  loading: () => <LoadingFallbackComponent />,
 });
 const Skills = dynamic(() => import("@/components/Skills"), {
   ssr: false,
-  loading: () => <LoadingFallback />,
+  loading: () => <LoadingFallbackComponent />,
 });
 const Projects = dynamic(() => import("@/components/Projects"), {
   ssr: false,
-  loading: () => <LoadingFallback />,
+  loading: () => <LoadingFallbackComponent />,
 });
 const Experience = dynamic(() => import("@/components/Experience"), {
   ssr: false,
-  loading: () => <LoadingFallback />,
+  loading: () => <LoadingFallbackComponent />,
 });
 const Contact = dynamic(() => import("@/components/Contact"), {
   ssr: false,
-  loading: () => <LoadingFallback />,
+  loading: () => <LoadingFallbackComponent />,
 });
 const BackToTop = dynamic(() => import("@/components/BackToTop"), {
   ssr: false,
@@ -51,20 +53,22 @@ const ScrollReveal = dynamic(
 
 export default function Home() {
   return (
-    <ClientOnly fallback={<LoadingFallback />}>
-      <Suspense fallback={<LoadingFallback />}>
-        <PageTransition>
-          <ScrollReveal>
-            <Hero />
-            <About />
-            <Skills />
-            <Projects />
-            <Experience />
-            <Contact />
-            <BackToTop />
-          </ScrollReveal>
-        </PageTransition>
-      </Suspense>
-    </ClientOnly>
+    <ErrorBoundary>
+      <ClientOnly fallback={<LoadingFallbackComponent />}>
+        <Suspense fallback={<LoadingFallbackComponent />}>
+          <PageTransition>
+            <ScrollReveal>
+              <Hero />
+              <About />
+              <Skills />
+              <Projects />
+              <Experience />
+              <Contact />
+              <BackToTop />
+            </ScrollReveal>
+          </PageTransition>
+        </Suspense>
+      </ClientOnly>
+    </ErrorBoundary>
   );
 }

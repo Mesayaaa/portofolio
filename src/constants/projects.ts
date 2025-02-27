@@ -4,16 +4,30 @@ export interface Project {
   title: string;
   description: string;
   image: string;
-  tags: string[];
+  tags?: string[];
   github: string;
   demo: string;
-  technologies?: {
+  technologies: {
     name: string;
     icon: any;
   }[];
 }
 
 export const projects: Project[] = [
+  {
+    title: "Portfolio Website",
+    description: "Modern portfolio website built with Next.js and Tailwind CSS",
+    image: "/portofolio/projects/portfolio.png",
+    tags: ["Next.js", "React", "Tailwind CSS", "TypeScript"],
+    github: "https://github.com/yourusername/portfolio",
+    demo: "https://your-portfolio.com",
+    technologies: [
+      { name: "Next.js", icon: SiNextdotjs },
+      { name: "React", icon: SiReact },
+      { name: "Tailwind CSS", icon: SiTailwindcss },
+      { name: "TypeScript", icon: SiTypescript },
+    ],
+  },
   {
     title: "Modern E-commerce Platform",
     description:

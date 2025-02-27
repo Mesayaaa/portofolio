@@ -85,7 +85,7 @@ export default function Skills() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="skills" className="relative py-20 overflow-hidden">
+    <section id="skills" ref={ref} className="relative py-20 overflow-hidden">
       {/* Enhanced Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-blue-50/30 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900/30" />
       <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.15] dark:opacity-[0.2]" />
@@ -240,7 +240,8 @@ export default function Skills() {
           className="mt-16 text-center"
         >
           <motion.a
-            href="#experience"
+            href="/#experience"
+            onClick={(e) => smoothScroll(e, "#experience")}
             className="relative inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-white rounded-full bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 group"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
