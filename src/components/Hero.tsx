@@ -149,7 +149,7 @@ const Hero: FC = () => {
         className="absolute inset-0"
       >
         <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-blue-900 dark:to-purple-900 animate-gradient-xy" />
-        <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-[0.1] dark:opacity-[0.15]" />
+        <div className="absolute inset-0 bg-[url('/portofolio/grid.svg')] bg-center opacity-[0.1] dark:opacity-[0.15]" />
       </motion.div>
 
       {/* Animated shapes background */}
@@ -202,7 +202,7 @@ const Hero: FC = () => {
               }}
             />
             <motion.img
-              src="/images/mesaya11.jpg"
+              src="/portofolio/images/mesaya11.jpg"
               alt="Christopher Mesaya"
               className="relative w-full h-full object-cover rounded-full shadow-2xl"
               whileHover={{ scale: 1.05 }}
