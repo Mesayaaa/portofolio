@@ -4,6 +4,7 @@ const nextConfig = {
   swcMinify: true,
   output: 'export',
   basePath: '/portofolio',
+  distDir: 'dist',
   images: {
     unoptimized: true,
     remotePatterns: [
@@ -16,47 +17,18 @@ const nextConfig = {
         hostname: '**',
       }
     ],
-    formats: ['image/avif', 'image/webp'],
-    minimumCacheTTL: 60,
   },
-  compress: true,
-  poweredByHeader: false,
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
+  // Optimize for static export
+  trailingSlash: true,
+  skipTrailingSlashRedirect: true,
+  // Disable server components
   experimental: {
     optimizeCss: true,
     optimizePackageImports: ['@mui/icons-material', '@mui/material', '@heroicons/react', 'react-icons'],
-    turbotrace: {
-      logLevel: 'error',
-    },
-    serverComponentsExternalPackages: ['sharp'],
-    appDir: true,
-  },
-  webpack: (config, { isServer }) => {
-    config.optimization = {
-      ...config.optimization,
-      splitChunks: {
-        chunks: 'all',
-        minSize: 20000,
-        maxSize: 70000,
-        cacheGroups: {
-          commons: {
-            test: /[\\/]node_modules[\\/]/,
-            name: 'vendors',
-            chunks: 'all',
-          },
-        },
-      },
-    };
-    if (!isServer) {
-      config.resolve.fallback = {
-        ...config.resolve.fallback,
-        fs: false,
-      };
-    }
-    return config;
-  },
+  }
 };
 
 module.exports = nextConfig; 

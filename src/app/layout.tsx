@@ -1,6 +1,5 @@
-import { Inter, Poppins } from "next/font/google";
+import { Inter } from "next/font/google";
 import { Metadata } from "next";
-import { ClientLayout } from "./ClientLayout";
 import "./globals.css";
 
 const inter = Inter({
@@ -38,7 +37,7 @@ export default function RootLayout({
       </head>
       <body className="relative font-sans antialiased bg-gradient-to-br from-background to-background/95">
         <div className="fixed inset-0 bg-grid-pattern opacity-[0.02] pointer-events-none" />
-        <ClientLayout>{children}</ClientLayout>
+        <div id="root">{children}</div>
       </body>
     </html>
   );
