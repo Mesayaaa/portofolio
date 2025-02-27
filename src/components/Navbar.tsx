@@ -3,11 +3,12 @@
 import { useState, useEffect, memo } from "react";
 import Link from "./Link";
 import Image from "./Image";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useTheme } from "@/contexts/ThemeContext";
 import { FiMenu, FiX, FiChevronRight } from "react-icons/fi";
 import { IconType } from "react-icons";
 import { useIsBrowser } from "@/hooks/useIsBrowser";
+import { smoothScroll } from "@/utils/smoothScroll";
 
 interface NavbarProps {
   navigationItems: { name: string; href: string }[];
@@ -27,9 +28,16 @@ const MemoizedLink = memo(function NavLink({
   isActive,
   className,
 }: NavLinkProps) {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (href.startsWith("/#")) {
+      smoothScroll(e, href.replace("/", ""));
+    }
+  };
+
   return (
     <Link
       href={href}
+      onClick={handleClick}
       className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
         isActive
           ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20"
@@ -78,38 +86,17 @@ MemoizedSocialLink.displayName = "MemoizedSocialLink";
 
 function Navbar({ navigationItems, socialLinks }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("home");
   const { theme, toggleTheme } = useTheme();
   const isBrowser = useIsBrowser();
 
   useEffect(() => {
-    if (!isBrowser) return;
-
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
-
-      // Update active section based on scroll position
-      const sections = navigationItems.map((item) =>
-        item.href.replace("#", "")
-      );
-      const currentSection = sections.find((section) => {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          return rect.top <= 100 && rect.bottom >= 100;
-        }
-        return false;
-      });
-
-      if (currentSection) {
-        setActiveSection(currentSection);
-      }
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isBrowser, navigationItems]);
+  }, []);
 
   return (
     <nav
@@ -126,74 +113,29 @@ function Navbar({ navigationItems, socialLinks }: NavbarProps) {
             <span className="font-bold text-xl">Portfolio</span>
           </Link>
 
-          {/* Desktop Navigation */}
+          {/* Navigation Links */}
           <div className="hidden md:flex items-center space-x-8">
             {navigationItems.map((item) => (
               <MemoizedLink
                 key={item.href}
                 href={item.href}
                 label={item.name}
-                isActive={activeSection === item.href.replace("#", "")}
+                isActive={item.href === "/"}
               />
             ))}
           </div>
 
-          {/* Theme Toggle and Mobile Menu Button */}
-          <div className="flex items-center space-x-4">
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={toggleTheme}
-              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
-            >
-              {theme === "dark" ? "🌞" : "🌙"}
-            </motion.button>
-
-            {/* Mobile Menu Button */}
-            <button
-              className="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            >
-              {isMobileMenuOpen ? (
-                <FiX className="w-6 h-6" />
-              ) : (
-                <FiMenu className="w-6 h-6" />
-              )}
-            </button>
-          </div>
+          {/* Theme Toggle */}
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={toggleTheme}
+            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+          >
+            {theme === "dark" ? "🌞" : "🌙"}
+          </motion.button>
         </div>
       </div>
-
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white dark:bg-gray-900 border-t dark:border-gray-800"
-          >
-            <div className="px-4 py-2 space-y-1">
-              {navigationItems.map((item) => (
-                <motion.a
-                  key={item.href}
-                  href={item.href}
-                  className={`block px-4 py-2 text-sm rounded-lg ${
-                    activeSection === item.href.replace("#", "")
-                      ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20"
-                      : "text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800"
-                  }`}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  whileHover={{ x: 10 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  {item.name}
-                </motion.a>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </nav>
   );
 }

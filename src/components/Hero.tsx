@@ -19,12 +19,10 @@ import {
   FiArrowRight,
   FiArrowDown,
   FiDownload,
-  FiInstagram,
 } from "react-icons/fi";
 import { useInView } from "react-intersection-observer";
 import { TypeAnimation } from "react-type-animation";
 import { useIsBrowser } from "@/hooks/useIsBrowser";
-import { socialLinks } from "@/constants/navigation";
 
 // Lazy load heavy components
 const Canvas = dynamic(
@@ -139,6 +137,7 @@ const Hero: FC = () => {
   return (
     <section
       id="home"
+      ref={ref}
       className="relative min-h-screen flex items-center justify-center overflow-hidden py-20"
     >
       {/* Enhanced animated background gradient */}
@@ -256,7 +255,7 @@ const Hero: FC = () => {
             className="flex flex-wrap justify-center gap-4 mt-8"
           >
             <motion.a
-              href="#about"
+              href="/#about"
               className="inline-flex items-center gap-2 px-8 py-4 text-lg font-medium text-white bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-full hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300"
               whileHover={{
                 scale: 1.05,
@@ -268,12 +267,14 @@ const Hero: FC = () => {
               <FiArrowDown className="animate-bounce" />
             </motion.a>
             <motion.div className="flex gap-4">
-              {socialLinks.map((social, index) => (
+              {[
+                { icon: FiGithub, href: "#", label: "GitHub" },
+                { icon: FiLinkedin, href: "#", label: "LinkedIn" },
+                { icon: FiTwitter, href: "#", label: "Twitter" },
+              ].map((social, index) => (
                 <motion.a
                   key={social.label}
                   href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
                   className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                   whileHover={{ scale: 1.1, rotate: 5 }}
                   whileTap={{ scale: 0.9 }}

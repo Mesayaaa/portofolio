@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { FiCode, FiLayout, FiSmartphone, FiUsers } from "react-icons/fi";
+import { smoothScroll } from "@/utils/smoothScroll";
 
 const features = [
   {
@@ -56,7 +57,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="py-20 bg-gradient-to-b from-white via-gray-50 to-blue-50/30 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 overflow-hidden"
+      className="relative py-20 bg-gradient-to-b from-white via-gray-50 to-blue-50/30 dark:from-gray-900 dark:to-gray-800 overflow-hidden"
     >
       {/* Background Patterns */}
       <div className="absolute inset-0 -z-10">
@@ -137,7 +138,8 @@ export default function About() {
           className="mt-16 text-center"
         >
           <motion.a
-            href="#skills"
+            href="/#skills"
+            onClick={(e) => smoothScroll(e, "#skills")}
             whileHover={{
               scale: 1.05,
               boxShadow: "0 4px 15px rgba(0,0,0,0.1)",
