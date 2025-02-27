@@ -24,11 +24,19 @@ const ScrollProgress = dynamic(() => import("@/components/ScrollProgress"), {
 
 export function ClientLayout({ children }: { children: React.ReactNode }) {
   const { isLoading, progress } = useLoadingState();
-  const [isClient, setIsClient] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
+    setMounted(true);
   }, []);
+
+  if (!mounted) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-pulse bg-gray-200 dark:bg-gray-700 h-16 w-3/4 mx-auto rounded" />
+      </div>
+    );
+  }
 
   return (
     <ThemeProvider>
@@ -39,8 +47,8 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
           ) : (
             <AnimatePresence mode="wait">
               <main className="relative">
-                {isClient && <ParallaxBackground />}
-                {isClient && <ScrollProgress />}
+                <ParallaxBackground />
+                <ScrollProgress />
                 <Navbar
                   navigationItems={navigationItems}
                   socialLinks={socialLinks}

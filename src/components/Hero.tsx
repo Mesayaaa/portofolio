@@ -120,8 +120,18 @@ const Hero: FC = () => {
     },
   };
 
-  if (!isBrowser) {
-    return null; // or a loading state
+  if (!mounted || !isBrowser) {
+    return (
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden py-20">
+        <div className="relative z-10 text-center max-w-5xl mx-auto px-4">
+          <div className="animate-pulse bg-gray-200 dark:bg-gray-700 w-40 h-40 mx-auto rounded-full mb-12" />
+          <div className="space-y-6">
+            <div className="animate-pulse bg-gray-200 dark:bg-gray-700 h-16 w-3/4 mx-auto rounded" />
+            <div className="animate-pulse bg-gray-200 dark:bg-gray-700 h-8 w-1/2 mx-auto rounded" />
+          </div>
+        </div>
+      </section>
+    );
   }
 
   return (
