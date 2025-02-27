@@ -12,28 +12,22 @@ import BackToTop from "@/components/BackToTop";
 import LoadingScreen from "@/components/LoadingScreen";
 import PageTransition from "@/components/PageTransition";
 import { ScrollReveal } from "@/components/ScrollWrapper";
-import { useIsBrowser } from "@/hooks/useIsBrowser";
+import ClientOnly from "@/components/ClientOnly";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
-  const isBrowser = useIsBrowser();
 
   useEffect(() => {
-    if (!isBrowser) return;
-
     let mounted = true;
 
     const loadResources = async () => {
       try {
-        // Load and initialize components in sequence
         const components = [Hero, About, Skills, Projects, Experience, Contact];
         const totalSteps = components.length;
 
         for (let i = 0; i < components.length; i++) {
           if (!mounted) return;
-
-          // Simulate component initialization
           await new Promise((resolve) => setTimeout(resolve, 300));
           setLoadingProgress(((i + 1) / totalSteps) * 100);
         }
@@ -54,27 +48,29 @@ export default function Home() {
     return () => {
       mounted = false;
     };
-  }, [isBrowser]);
-
-  if (!isBrowser) {
-    return null; // or a loading state
-  }
+  }, []);
 
   if (isLoading) {
-    return <LoadingScreen progress={loadingProgress} />;
+    return (
+      <ClientOnly>
+        <LoadingScreen progress={loadingProgress} />
+      </ClientOnly>
+    );
   }
 
   return (
-    <PageTransition>
-      <ScrollReveal>
-        <Hero />
-        <About />
-        <Skills />
-        <Projects />
-        <Experience />
-        <Contact />
-        <BackToTop />
-      </ScrollReveal>
-    </PageTransition>
+    <ClientOnly>
+      <PageTransition>
+        <ScrollReveal>
+          <Hero />
+          <About />
+          <Skills />
+          <Projects />
+          <Experience />
+          <Contact />
+          <BackToTop />
+        </ScrollReveal>
+      </PageTransition>
+    </ClientOnly>
   );
 }

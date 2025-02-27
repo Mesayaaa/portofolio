@@ -31,8 +31,9 @@ const nextConfig = {
       logLevel: 'error',
     },
     serverComponentsExternalPackages: ['sharp'],
+    appDir: true,
   },
-  webpack: (config) => {
+  webpack: (config, { isServer }) => {
     config.optimization = {
       ...config.optimization,
       splitChunks: {
@@ -48,6 +49,12 @@ const nextConfig = {
         },
       },
     };
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+      };
+    }
     return config;
   },
 };
