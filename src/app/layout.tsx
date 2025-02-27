@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import { Metadata } from "next";
 import "./globals.css";
+import { ClientLayout } from "./ClientLayout";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -37,7 +38,7 @@ export default function RootLayout({
       </head>
       <body className="relative font-sans antialiased bg-gradient-to-br from-background to-background/95">
         <div className="fixed inset-0 bg-grid-pattern opacity-[0.02] pointer-events-none" />
-        <div id="root">{children}</div>
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   );
