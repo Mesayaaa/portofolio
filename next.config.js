@@ -2,7 +2,10 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  output: 'export',
+  basePath: '/portofolio',
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
