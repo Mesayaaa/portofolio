@@ -1,32 +1,44 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import Hero from "@/components/Hero";
-import About from "@/components/About";
-import Skills from "@/components/Skills";
-import Projects from "@/components/Projects";
-import Experience from "@/components/Experience";
-import Contact from "@/components/Contact";
-import BackToTop from "@/components/BackToTop";
-import LoadingScreen from "@/components/LoadingScreen";
-import PageTransition from "@/components/PageTransition";
-import { ScrollReveal } from "@/components/ScrollWrapper";
-import ClientOnly from "@/components/ClientOnly";
+import dynamic from "next/dynamic";
+
+// Import components
+const Hero = dynamic(() => import("@/components/Hero"), { ssr: false });
+const About = dynamic(() => import("@/components/About"), { ssr: false });
+const Skills = dynamic(() => import("@/components/Skills"), { ssr: false });
+const Projects = dynamic(() => import("@/components/Projects"), { ssr: false });
+const Experience = dynamic(() => import("@/components/Experience"), {
+  ssr: false,
+});
+const Contact = dynamic(() => import("@/components/Contact"), { ssr: false });
+const BackToTop = dynamic(() => import("@/components/BackToTop"), {
+  ssr: false,
+});
+const LoadingScreen = dynamic(() => import("@/components/LoadingScreen"), {
+  ssr: false,
+});
+const PageTransition = dynamic(() => import("@/components/PageTransition"), {
+  ssr: false,
+});
+const ScrollReveal = dynamic(
+  () => import("@/components/ScrollWrapper").then((mod) => mod.ScrollReveal),
+  { ssr: false }
+);
 
 export default function Home() {
+  const [mounted, setMounted] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
 
   useEffect(() => {
+    setMounted(true);
     let mounted = true;
 
     const loadResources = async () => {
       try {
-        const components = [Hero, About, Skills, Projects, Experience, Contact];
-        const totalSteps = components.length;
-
-        for (let i = 0; i < components.length; i++) {
+        const totalSteps = 6; // Number of components to load
+        for (let i = 0; i < totalSteps; i++) {
           if (!mounted) return;
           await new Promise((resolve) => setTimeout(resolve, 300));
           setLoadingProgress(((i + 1) / totalSteps) * 100);
@@ -50,27 +62,25 @@ export default function Home() {
     };
   }, []);
 
+  if (!mounted) {
+    return null;
+  }
+
   if (isLoading) {
-    return (
-      <ClientOnly>
-        <LoadingScreen progress={loadingProgress} />
-      </ClientOnly>
-    );
+    return <LoadingScreen progress={loadingProgress} />;
   }
 
   return (
-    <ClientOnly>
-      <PageTransition>
-        <ScrollReveal>
-          <Hero />
-          <About />
-          <Skills />
-          <Projects />
-          <Experience />
-          <Contact />
-          <BackToTop />
-        </ScrollReveal>
-      </PageTransition>
-    </ClientOnly>
+    <PageTransition>
+      <ScrollReveal>
+        <Hero />
+        <About />
+        <Skills />
+        <Projects />
+        <Experience />
+        <Contact />
+        <BackToTop />
+      </ScrollReveal>
+    </PageTransition>
   );
 }

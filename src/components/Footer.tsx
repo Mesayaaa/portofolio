@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { FiHeart } from "react-icons/fi";
+import { useEffect, useState } from "react";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -12,6 +13,16 @@ const containerVariants = {
 };
 
 export default function Footer() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null; // or a loading state
+  }
+
   return (
     <footer className="relative mt-25" role="contentinfo" aria-label="Footer">
       {/* Subtle separator */}
