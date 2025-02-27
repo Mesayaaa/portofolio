@@ -3,8 +3,7 @@
 import { motion, useAnimation, useInView } from "framer-motion";
 import { FiGithub, FiExternalLink, FiArrowRight } from "react-icons/fi";
 import dynamic from "next/dynamic";
-import { LazyLoadImage } from "react-lazy-load-image-component";
-import "react-lazy-load-image-component/src/effects/blur.css";
+import Image from "./Image";
 import { projects } from "@/constants/projects";
 import { useRef, useEffect } from "react";
 
@@ -104,9 +103,11 @@ export default function Projects() {
             >
               {/* Project image */}
               <div className="relative aspect-video overflow-hidden">
-                <img
+                <Image
                   src={project.image}
                   alt={project.title}
+                  width={1920}
+                  height={1080}
                   className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
                 />
               </div>

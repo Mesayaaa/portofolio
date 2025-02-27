@@ -89,7 +89,7 @@ export default function Experience() {
               key={experience.title}
               variants={itemVariants}
               className={`relative mb-12 ${
-                index % 2 === 0 ? "md:pr-12 md:text-right" : "md:pl-12"
+                index % 2 === 0 ? "md:pr-12" : "md:pl-12"
               } md:w-1/2 ${index % 2 === 0 ? "md:ml-0" : "md:ml-auto"}`}
             >
               {/* Timeline dot */}
@@ -106,7 +106,7 @@ export default function Experience() {
                 whileHover={{ scale: 1.02 }}
                 className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300"
               >
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
                   <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
                     {experience.title}
                   </h3>
@@ -135,7 +135,7 @@ export default function Experience() {
                       initial={{ opacity: 0, x: -10 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       transition={{ delay: i * 0.1 }}
-                      className="flex items-start"
+                      className="flex items-start text-left"
                     >
                       <span className="w-1.5 h-1.5 bg-blue-600 dark:bg-blue-400 rounded-full mt-2 mr-3 flex-shrink-0" />
                       <span className="text-gray-600 dark:text-gray-300">
