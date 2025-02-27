@@ -21,7 +21,12 @@ interface NavLinkProps {
   className?: string;
 }
 
-const MemoizedLink = memo(function NavLink({ href, label, isActive, className }: NavLinkProps) {
+const MemoizedLink = memo(function NavLink({
+  href,
+  label,
+  isActive,
+  className,
+}: NavLinkProps) {
   return (
     <Link
       href={href}
@@ -51,7 +56,11 @@ interface SocialLinkProps {
   label: string;
 }
 
-const MemoizedSocialLink = memo(function SocialLink({ href, Icon, label }: SocialLinkProps) {
+const MemoizedSocialLink = memo(function SocialLink({
+  href,
+  Icon,
+  label,
+}: SocialLinkProps) {
   return (
     <a
       href={href}
@@ -94,7 +103,7 @@ function Navbar({ navigationItems, socialLinks }: NavbarProps) {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <Image
-              src="/images/logo.png"
+              src="/portofolio/images/logo.png"
               alt="Logo"
               width={40}
               height={40}
