@@ -4,7 +4,7 @@ const nextConfig = {
   swcMinify: true,
   output: 'export',
   basePath: '/portofolio',
-  distDir: 'dist',
+  distDir: 'out',
   images: {
     unoptimized: true,
     remotePatterns: [
