@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import Link from "./Link";
 import Image from "./Image";
 import { motion } from "framer-motion";
@@ -14,24 +14,22 @@ interface NavbarProps {
   socialLinks: { label: string; icon: IconType; href: string }[];
 }
 
-const MemoizedLink = memo(function NavLink({
-  href,
-  label,
-  isActive,
-}: {
+interface NavLinkProps {
   href: string;
   label: string;
   isActive: boolean;
-}) {
+  className?: string;
+}
+
+const MemoizedLink = memo(function NavLink({ href, label, isActive, className }: NavLinkProps) {
   return (
     <Link
       href={href}
-      className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200
-        ${
-          isActive
-            ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20"
-            : "text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800/50"
-        }`}
+      className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
+        isActive
+          ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20"
+          : "text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800/50"
+      } ${className || ""}`}
     >
       {label}
       {isActive && (
@@ -45,15 +43,15 @@ const MemoizedLink = memo(function NavLink({
   );
 });
 
-const MemoizedSocialLink = memo(function SocialLink({
-  href,
-  Icon,
-  label,
-}: {
+MemoizedLink.displayName = "MemoizedLink";
+
+interface SocialLinkProps {
   href: string;
-  Icon: React.ComponentType;
+  Icon: IconType;
   label: string;
-}) {
+}
+
+const MemoizedSocialLink = memo(function SocialLink({ href, Icon, label }: SocialLinkProps) {
   return (
     <a
       href={href}
@@ -66,6 +64,8 @@ const MemoizedSocialLink = memo(function SocialLink({
     </a>
   );
 });
+
+MemoizedSocialLink.displayName = "MemoizedSocialLink";
 
 function Navbar({ navigationItems, socialLinks }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);

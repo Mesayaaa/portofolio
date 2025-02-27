@@ -6,12 +6,18 @@ import { getBasePath } from "@/utils/getBasePath";
 interface LinkProps extends Omit<NextLinkProps, "href"> {
   href: string;
   children: React.ReactNode;
+  className?: string;
 }
 
-export default function Link({ href, children, ...props }: LinkProps) {
+export default function Link({
+  href,
+  children,
+  className,
+  ...props
+}: LinkProps) {
   const linkHref = href.startsWith("http") ? href : getBasePath(href);
   return (
-    <NextLink href={linkHref} {...props}>
+    <NextLink href={linkHref} className={className} {...props}>
       {children}
     </NextLink>
   );
