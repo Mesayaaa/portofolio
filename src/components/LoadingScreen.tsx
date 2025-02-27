@@ -1,166 +1,122 @@
 "use client";
 
-import { memo } from "react";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 interface LoadingScreenProps {
-  progress: number;
+  progress?: number;
+  onLoadingComplete?: () => void;
 }
 
-function LoadingScreen({ progress }: LoadingScreenProps) {
+export default function LoadingScreen({
+  progress = 0,
+  onLoadingComplete,
+}: LoadingScreenProps) {
+  const [loadingProgress, setLoadingProgress] = useState(0);
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    // Simulate minimum loading time
+    const timer = setTimeout(() => {
+      setLoadingProgress(Math.min(progress + Math.random() * 20, 100));
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [progress]);
+
+  useEffect(() => {
+    if (loadingProgress >= 100) {
+      const timer = setTimeout(() => {
+        setIsVisible(false);
+        onLoadingComplete?.();
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [loadingProgress, onLoadingComplete]);
+
   return (
     <motion.div
-      className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-background"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
+      initial={{ opacity: 1 }}
+      animate={{ opacity: isVisible ? 1 : 0 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
+      className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800"
     >
-      {/* Animated logo/brand */}
+      {/* Logo or Brand */}
       <motion.div
         initial={{ scale: 0.5, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
+        transition={{ duration: 0.5 }}
         className="mb-8"
       >
-        <div className="relative w-24 h-24">
-          <motion.div
-            className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"
-            animate={{
-              scale: [1, 1.2, 1],
-              rotate: [0, 180, 360],
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-          />
-          <motion.div
-            className="absolute inset-1 bg-background rounded-full flex items-center justify-center"
-            animate={{
-              scale: [1, 1.1, 1],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          >
-            <span className="text-2xl font-bold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+        <div className="w-24 h-24 relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full animate-spin-slow blur-md" />
+          <div className="absolute inset-1 bg-white dark:bg-gray-900 rounded-full" />
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               CM
             </span>
-          </motion.div>
+          </div>
         </div>
       </motion.div>
 
-      {/* Progress bar container */}
-      <div className="relative w-64 h-2 bg-muted rounded-full overflow-hidden">
+      {/* Progress Bar */}
+      <div className="w-64 h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
         <motion.div
-          className="absolute left-0 top-0 h-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"
-          initial={{ width: 0 }}
-          animate={{ width: `${progress}%` }}
-          transition={{
-            duration: 0.3,
-            ease: "easeOut",
-          }}
-        />
-
-        {/* Animated glow effect */}
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-30"
-          animate={{
-            x: [-100, 300],
-          }}
-          transition={{
-            duration: 1.5,
-            repeat: Infinity,
-            ease: "linear",
-          }}
+          className="h-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"
+          initial={{ width: "0%" }}
+          animate={{ width: `${loadingProgress}%` }}
+          transition={{ duration: 0.5 }}
         />
       </div>
 
-      {/* Loading text with typewriter effect */}
+      {/* Loading Text */}
       <motion.div
-        className="mt-6 text-lg font-medium text-foreground/80"
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
+        transition={{ delay: 0.2 }}
+        className="mt-4 text-sm text-gray-600 dark:text-gray-400"
       >
-        <span className="inline-flex items-center">
-          <motion.span
-            animate={{
-              opacity: [1, 0.5, 1],
-            }}
-            transition={{
-              duration: 1.5,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          >
-            Welcome to my portfolio
-          </motion.span>
-          <motion.span
-            animate={{
-              opacity: [1, 0],
-            }}
-            transition={{
-              duration: 0.5,
-              repeat: Infinity,
-              repeatType: "reverse",
-            }}
-            className="ml-1"
-          >
-            |
-          </motion.span>
-        </span>
+        {loadingProgress < 100 ? (
+          <span>Loading... {Math.round(loadingProgress)}%</span>
+        ) : (
+          <span>Welcome!</span>
+        )}
       </motion.div>
 
-      {/* Background effects */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_50%_50%,rgba(var(--primary-rgb),0.05),transparent)]" />
-        <motion.div
-          className="absolute inset-0 opacity-20"
-          animate={{
-            backgroundPosition: ["0% 0%", "100% 100%"],
-            backgroundSize: ["100% 100%", "200% 200%"],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            repeatType: "reverse",
-            ease: "linear",
-          }}
-          style={{
-            backgroundImage:
-              "radial-gradient(circle at center, rgba(var(--primary-rgb), 0.1) 0%, transparent 50%)",
-          }}
-        />
-
-        {/* Floating particles */}
-        {[...Array(5)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-2 h-2 rounded-full bg-primary/30"
-            initial={{
-              x: Math.random() * window.innerWidth,
-              y: Math.random() * window.innerHeight,
-            }}
-            animate={{
-              y: [0, -20, 0],
-              opacity: [0.5, 1, 0.5],
-            }}
-            transition={{
-              duration: 3 + i,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: i * 0.2,
-            }}
-          />
-        ))}
-      </div>
+      {/* Loading Messages */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5 }}
+        className="mt-8 text-center text-gray-500 dark:text-gray-400"
+      >
+        <LoadingMessage progress={loadingProgress} />
+      </motion.div>
     </motion.div>
   );
 }
 
-export default memo(LoadingScreen);
+function LoadingMessage({ progress }: { progress: number }) {
+  const messages = [
+    "Preparing your experience...",
+    "Loading assets...",
+    "Setting up the environment...",
+    "Almost there...",
+    "Final touches...",
+  ];
+
+  const index = Math.min(Math.floor(progress / 20), messages.length - 1);
+
+  return (
+    <motion.p
+      key={messages[index]}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
+      transition={{ duration: 0.5 }}
+    >
+      {messages[index]}
+    </motion.p>
+  );
+}

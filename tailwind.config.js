@@ -57,6 +57,9 @@ module.exports = {
         'slide-up': 'slideUp 0.5s ease-out',
         'bounce-slow': 'bounce 3s infinite',
         'gradient': 'gradient 8s linear infinite',
+        'spin-slow': 'spin 3s linear infinite',
+        'text-shimmer': 'text-shimmer 2.5s ease-out infinite alternate',
+        'gradient-xy': 'gradient-xy 15s ease infinite',
       },
       keyframes: {
         fadeIn: {
@@ -77,6 +80,20 @@ module.exports = {
             'background-position': 'right center',
           },
         },
+        'text-shimmer': {
+          from: { backgroundPosition: '0 0' },
+          to: { backgroundPosition: '-200% 0' },
+        },
+        'gradient-xy': {
+          '0%, 100%': {
+            'background-size': '400% 400%',
+            'background-position': 'left center',
+          },
+          '50%': {
+            'background-size': '200% 200%',
+            'background-position': 'right center',
+          },
+        },
       },
       backgroundColor: {
         primary: 'var(--color-bg-primary)',
@@ -87,6 +104,13 @@ module.exports = {
         secondary: 'var(--color-text-secondary)',
         'primary-foreground': 'hsl(var(--primary-foreground))',
         'secondary-foreground': 'hsl(var(--secondary-foreground))',
+      },
+      backgroundSize: {
+        'auto': 'auto',
+        'cover': 'cover',
+        'contain': 'contain',
+        '200%': '200%',
+        '400%': '400%',
       },
     },
   },

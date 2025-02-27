@@ -25,9 +25,15 @@ const ScrollProgress = dynamic(() => import("@/components/ScrollProgress"), {
 export function ClientLayout({ children }: { children: React.ReactNode }) {
   const { isLoading, progress } = useLoadingState();
   const [mounted, setMounted] = useState(false);
+  const [contentReady, setContentReady] = useState(false);
 
   useEffect(() => {
     setMounted(true);
+    // Simulate content loading
+    const timer = setTimeout(() => {
+      setContentReady(true);
+    }, 2000); // Adjust this time based on your needs
+    return () => clearTimeout(timer);
   }, []);
 
   if (!mounted) {
@@ -42,8 +48,11 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
     <ThemeProvider>
       <ErrorBoundary>
         <LazyMotion features={domAnimation}>
-          {isLoading ? (
-            <LoadingScreen progress={progress} />
+          {isLoading || !contentReady ? (
+            <LoadingScreen
+              progress={progress}
+              onLoadingComplete={() => setContentReady(true)}
+            />
           ) : (
             <AnimatePresence mode="wait">
               <main className="relative">
