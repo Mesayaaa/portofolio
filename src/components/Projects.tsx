@@ -65,7 +65,10 @@ export default function Projects() {
   }, [isInView, controls]);
 
   return (
-    <section ref={ref} className="relative py-24 overflow-hidden">
+    <section
+      id="projects"
+      className="py-20 bg-gradient-to-b from-gray-50 via-white to-blue-50/30 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"
+    >
       {/* Background patterns */}
       <div className="absolute inset-0 bg-gradient-to-br from-gray-50/50 via-white to-blue-50/30 dark:from-gray-900 dark:via-gray-800/50 dark:to-gray-900/80" />
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] dark:opacity-20" />

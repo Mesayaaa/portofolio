@@ -169,7 +169,10 @@ export default function Contact() {
   };
 
   return (
-    <section className="relative py-20 overflow-hidden">
+    <section
+      id="contact"
+      className="py-20 bg-gradient-to-b from-gray-50 via-white to-blue-50/30 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"
+    >
       {/* Enhanced background decoration */}
       <motion.div
         initial={{ opacity: 0 }}

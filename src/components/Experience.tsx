@@ -65,7 +65,10 @@ const itemVariants = {
 
 export default function Experience() {
   return (
-    <section className="py-20 bg-gradient-to-b from-gray-50 via-white to-blue-50/30 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <section
+      id="experience"
+      className="py-20 bg-gradient-to-b from-gray-50 via-white to-blue-50/30 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"
+    >
       <motion.div
         variants={containerVariants}
         initial="hidden"

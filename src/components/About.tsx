@@ -56,7 +56,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="relative py-20 bg-gradient-to-b from-white via-gray-50 to-blue-50/30 dark:from-gray-900 dark:to-gray-800 overflow-hidden"
+      className="py-20 bg-gradient-to-b from-white via-gray-50 to-blue-50/30 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 overflow-hidden"
     >
       {/* Background Patterns */}
       <div className="absolute inset-0 -z-10">

@@ -85,7 +85,10 @@ export default function Skills() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="skills" ref={ref} className="relative py-20 overflow-hidden">
+    <section
+      id="skills"
+      className="py-20 bg-gradient-to-b from-gray-50 via-white to-blue-50/30 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"
+    >
       {/* Enhanced Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-blue-50/30 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900/30" />
       <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.15] dark:opacity-[0.2]" />
