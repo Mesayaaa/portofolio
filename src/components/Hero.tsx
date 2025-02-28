@@ -220,6 +220,7 @@ const Hero: FC = () => {
           >
             <motion.h1
               className="text-5xl sm:text-6xl md:text-7xl font-bold"
+              style={{ display: "inline-block", paddingBottom: "1rem" }}
               animate={{ scale: [1, 1.01, 1] }}
               transition={{ duration: 5, repeat: Infinity }}
             >

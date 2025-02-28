@@ -103,7 +103,7 @@ function Navbar({ navigationItems, socialLinks }: NavbarProps) {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-gradient-to-r from-blue-500 to-purple-500 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
           ? "bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-lg"
           : "bg-transparent"
@@ -129,22 +129,15 @@ function Navbar({ navigationItems, socialLinks }: NavbarProps) {
               isMenuOpen ? "block" : "hidden"
             }`}
           >
-            {navigationItems.map((item) => {
-              const isActive = item.href === "/";
-              return (
-                <MemoizedLink
-                  key={item.href}
-                  href={item.href}
-                  label={item.name}
-                  isActive={isActive}
-                  className={`transition-transform duration-300 transform hover:scale-110 hover:text-blue-400 ${
-                    isActive
-                      ? "text-blue-600 dark:text-blue-400 border-b-2 border-blue-600"
-                      : "text-gray-600 dark:text-gray-300"
-                  }`}
-                />
-              );
-            })}
+            {navigationItems.map((item) => (
+              <MemoizedLink
+                key={item.href}
+                href={item.href}
+                label={item.name}
+                isActive={item.href === "/"}
+                className="transition-transform duration-300 transform hover:scale-105"
+              />
+            ))}
           </div>
 
           {/* Theme Toggle */}
