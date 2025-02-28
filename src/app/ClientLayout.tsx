@@ -63,13 +63,13 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
                   socialLinks={socialLinks}
                 />
                 {children}
-                <Footer />
                 <Toaster
                   position="bottom-right"
                   toastOptions={{
                     className: "bg-toaster-bg text-toaster-color",
                   }}
                 />
+                <Footer />
               </main>
             </AnimatePresence>
           )}
