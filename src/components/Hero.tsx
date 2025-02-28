@@ -140,7 +140,7 @@ const Hero: FC = () => {
       <section
         id="home"
         ref={ref}
-        className="relative min-h-screen flex items-center justify-center overflow-hidden py-20"
+        className="relative min-h-screen flex items-center justify-center overflow-hidden py-20 px-4 sm:px-6 lg:px-8"
       >
         {/* Enhanced animated background gradient */}
         <motion.div
@@ -158,7 +158,7 @@ const Hero: FC = () => {
           {[...Array(5)].map((_, i) => (
             <motion.div
               key={i}
-              className="absolute w-[500px] h-[500px] rounded-full"
+              className="absolute w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] lg:w-[500px] lg:h-[500px] rounded-full"
               style={{
                 background: `radial-gradient(circle, ${
                   i % 2 === 0
@@ -182,14 +182,14 @@ const Hero: FC = () => {
           ))}
         </div>
 
-        <div className="relative z-10 text-center max-w-5xl mx-auto px-4">
+        <div className="relative z-10 text-center max-w-5xl mx-auto">
           <motion.div
             initial={{ scale: 0.5, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
             className="relative inline-block mb-12"
           >
-            <div className="relative w-40 h-40 mx-auto">
+            <div className="relative w-32 h-32 sm:w-40 sm:h-40 mx-auto">
               <motion.div
                 className="absolute -inset-4 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-full opacity-75 blur-lg"
                 animate={{
@@ -219,7 +219,7 @@ const Hero: FC = () => {
             className="space-y-6"
           >
             <motion.h1
-              className="text-5xl sm:text-6xl md:text-7xl font-bold"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold"
               style={{
                 display: "inline-block",
                 paddingBottom: "1rem",
@@ -236,7 +236,7 @@ const Hero: FC = () => {
             </motion.h1>
 
             <motion.div
-              className="text-2xl sm:text-3xl md:text-4xl text-gray-700 dark:text-gray-300"
+              className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-gray-700 dark:text-gray-300"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.7, delay: 0.5 }}
@@ -266,7 +266,7 @@ const Hero: FC = () => {
               <motion.a
                 href="/#about"
                 onClick={(e) => smoothScroll(e, "#about")}
-                className="inline-flex items-center gap-2 px-8 py-4 text-lg font-medium text-white bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-full hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300"
+                className="inline-flex items-center gap-2 px-6 py-3 text-lg font-medium text-white bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-full hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300"
                 whileHover={{
                   scale: 1.05,
                   boxShadow: "0 20px 25px -5px rgba(147, 51, 234, 0.25)",
@@ -285,7 +285,7 @@ const Hero: FC = () => {
                   <motion.a
                     key={social.label}
                     href={social.href}
-                    className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                    className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                     whileHover={{ scale: 1.1, rotate: 5 }}
                     whileTap={{ scale: 0.9 }}
                     initial={{ opacity: 0, x: -20 }}
