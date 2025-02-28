@@ -2,7 +2,6 @@ import { Inter } from "next/font/google";
 import { Metadata } from "next";
 import "./globals.css";
 import { ClientLayout } from "./ClientLayout";
-import { SplashCursor } from "@/components/SplashCursor";
 import Providers from "@/components/Providers";
 
 const inter = Inter({
@@ -41,7 +40,6 @@ export default function RootLayout({
       <body className="relative font-sans antialiased bg-gradient-to-br from-background to-background/95 cursor-none">
         <div className="fixed inset-0 bg-grid-pattern opacity-[0.02] pointer-events-none" />
         <Providers>
-          <SplashCursor />
           <ClientLayout>{children}</ClientLayout>
         </Providers>
       </body>

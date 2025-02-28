@@ -3,15 +3,9 @@
 import { motion, useAnimation, useInView } from "framer-motion";
 import { FiGithub, FiExternalLink, FiArrowRight } from "react-icons/fi";
 import dynamic from "next/dynamic";
-import Image from "./Image";
 import { projects } from "@/constants/projects";
 import { useRef, useEffect } from "react";
-
-const ThemeAwareImage = dynamic(() => import("./ThemeAwareImage"), {
-  loading: () => (
-    <div className="animate-pulse bg-gray-200 dark:bg-gray-700 h-64 rounded-lg" />
-  ),
-});
+import ThemeAwareImage from "./ThemeAwareImage";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -103,8 +97,9 @@ export default function Projects() {
             >
               {/* Project image */}
               <div className="relative aspect-video overflow-hidden">
-                <Image
-                  src={project.image}
+                <ThemeAwareImage
+                  lightSrc={project.image}
+                  darkSrc={project.image}
                   alt={project.title}
                   width={1920}
                   height={1080}

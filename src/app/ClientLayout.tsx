@@ -11,7 +11,6 @@ import Footer from "@/components/Footer";
 import { useLoadingState } from "@/hooks/useLoadingState";
 import { navigationItems, socialLinks } from "@/constants/navigation";
 import { Toaster } from "react-hot-toast";
-import { SplashCursor } from "@/components/SplashCursor";
 
 const ParallaxBackground = dynamic(
   () => import("@/components/ParallaxBackground"),
@@ -57,7 +56,6 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
           ) : (
             <AnimatePresence mode="wait">
               <main className="relative">
-                <SplashCursor />
                 <ParallaxBackground />
                 <ScrollProgress />
                 <Navbar
