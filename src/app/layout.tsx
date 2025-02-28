@@ -37,7 +37,7 @@ export default function RootLayout({
           crossOrigin=""
         />
       </head>
-      <body className="relative font-sans antialiased bg-gradient-to-br from-background to-background/95 cursor-none">
+      <body className="relative font-sans antialiased bg-gradient-to-br from-background to-background/95">
         <div className="fixed inset-0 bg-grid-pattern opacity-[0.02] pointer-events-none" />
         <Providers>
           <ClientLayout>{children}</ClientLayout>
