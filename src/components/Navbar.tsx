@@ -5,7 +5,7 @@ import Link from "./Link";
 import Image from "./Image";
 import { motion } from "framer-motion";
 import { useTheme } from "@/contexts/ThemeContext";
-import { FiMenu, FiX, FiChevronRight } from "react-icons/fi";
+import { FiMenu, FiX } from "react-icons/fi";
 import { IconType } from "react-icons";
 import { useIsBrowser } from "@/hooks/useIsBrowser";
 import { smoothScroll } from "@/utils/smoothScroll";
@@ -39,7 +39,7 @@ const MemoizedLink = memo(function NavLink({
       <Link
         href={href}
         onClick={handleClick}
-        className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 hover:bg-blue-100 dark:hover:bg-blue-800 ${
+        className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 ease-in-out hover:bg-blue-100 dark:hover:bg-blue-800 ${
           isActive
             ? "text-blue-600 dark:text-blue-400 border-b-2 border-blue-600"
             : "text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
@@ -51,7 +51,7 @@ const MemoizedLink = memo(function NavLink({
         <motion.div
           layoutId="activeNavItem"
           className="absolute -bottom-1 left-0 right-0 h-0.5 bg-blue-600 dark:bg-blue-400"
-          transition={{ type: "spring", stiffness: 380, damping: 30 }}
+          transition={{ type: "spring", stiffness: 400, damping: 25 }}
         />
       )}
     </div>
@@ -108,7 +108,7 @@ function Navbar({ navigationItems, socialLinks }: NavbarProps) {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out ${
         isScrolled
           ? "bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-lg"
           : "bg-transparent"
@@ -127,7 +127,7 @@ function Navbar({ navigationItems, socialLinks }: NavbarProps) {
             initial="hidden"
             animate={isMenuOpen ? "visible" : "hidden"}
             variants={menuVariants}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
           >
             <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
               {isMenuOpen ? <FiX /> : <FiMenu />}
@@ -146,13 +146,13 @@ function Navbar({ navigationItems, socialLinks }: NavbarProps) {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
               >
                 <MemoizedLink
                   href={item.href}
                   label={item.name}
                   isActive={item.href === "/"}
-                  className="transition-transform duration-300 transform hover:scale-110"
+                  className="transition-transform duration-300 transform hover:scale-110 hover:shadow-lg hover:shadow-blue-500/50"
                 />
               </motion.div>
             ))}

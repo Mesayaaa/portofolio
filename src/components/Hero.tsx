@@ -230,7 +230,7 @@ const Hero: FC = () => {
               animate={{ scale: [1, 1.01, 1] }}
               transition={{ duration: 5, repeat: Infinity }}
             >
-              <span className="inline-block bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent animate-text-shimmer">
+              <span className="inline-block bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent animate-text-shimmer text-2xl sm:text-3xl md:text-4xl lg:text-5xl whitespace-nowrap">
                 Hi, I'm Christopher Mesaya
               </span>
             </motion.h1>
