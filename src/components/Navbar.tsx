@@ -88,6 +88,7 @@ MemoizedSocialLink.displayName = "MemoizedSocialLink";
 
 function Navbar({ navigationItems, socialLinks }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const isBrowser = useIsBrowser();
 
@@ -102,7 +103,7 @@ function Navbar({ navigationItems, socialLinks }: NavbarProps) {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-gradient-to-r from-blue-500 to-purple-500 ${
         isScrolled
           ? "bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-lg"
           : "bg-transparent"
@@ -115,17 +116,35 @@ function Navbar({ navigationItems, socialLinks }: NavbarProps) {
             CM
           </span>
 
+          {/* Hamburger Menu for Mobile */}
+          <div className="md:hidden">
+            <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
+              {isMenuOpen ? <FiX /> : <FiMenu />}
+            </button>
+          </div>
+
           {/* Navigation Links */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navigationItems.map((item) => (
-              <MemoizedLink
-                key={item.href}
-                href={item.href}
-                label={item.name}
-                isActive={item.href === "/"}
-                className="transition-transform duration-300 transform hover:scale-105"
-              />
-            ))}
+          <div
+            className={`hidden md:flex items-center space-x-8 ${
+              isMenuOpen ? "block" : "hidden"
+            }`}
+          >
+            {navigationItems.map((item) => {
+              const isActive = item.href === "/";
+              return (
+                <MemoizedLink
+                  key={item.href}
+                  href={item.href}
+                  label={item.name}
+                  isActive={isActive}
+                  className={`transition-transform duration-300 transform hover:scale-110 hover:text-blue-400 ${
+                    isActive
+                      ? "text-blue-600 dark:text-blue-400 border-b-2 border-blue-600"
+                      : "text-gray-600 dark:text-gray-300"
+                  }`}
+                />
+              );
+            })}
           </div>
 
           {/* Theme Toggle */}
