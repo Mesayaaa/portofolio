@@ -123,7 +123,7 @@ const Hero: FC = () => {
 
   if (!mounted || !isBrowser) {
     return (
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden py-20">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden py-20 px-4">
         <div className="relative z-10 text-center max-w-5xl mx-auto px-4">
           <div className="animate-pulse bg-gray-200 dark:bg-gray-700 w-40 h-40 mx-auto rounded-full mb-12" />
           <div className="space-y-6">
@@ -205,7 +205,7 @@ const Hero: FC = () => {
               <motion.img
                 src="/portofolio/images/mesaya11.jpg"
                 alt="Christopher Mesaya"
-                className="relative w-full h-auto object-cover rounded-full shadow-2xl"
+                className="relative w-full h-full object-cover rounded-full shadow-2xl"
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
               />
@@ -219,7 +219,7 @@ const Hero: FC = () => {
             className="space-y-6"
           >
             <motion.h1
-              className="text-4xl sm:text-5xl md:text-6xl font-bold"
+              className="text-5xl sm:text-6xl md:text-7xl font-bold"
               style={{
                 display: "inline-block",
                 paddingBottom: "1rem",
@@ -236,7 +236,7 @@ const Hero: FC = () => {
             </motion.h1>
 
             <motion.div
-              className="text-xl sm:text-2xl md:text-3xl text-gray-700 dark:text-gray-300"
+              className="text-2xl sm:text-3xl md:text-4xl text-gray-700 dark:text-gray-300"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.7, delay: 0.5 }}
