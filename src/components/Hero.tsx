@@ -23,6 +23,7 @@ import {
 import { useInView } from "react-intersection-observer";
 import { TypeAnimation } from "react-type-animation";
 import { useIsBrowser } from "@/hooks/useIsBrowser";
+import { smoothScroll } from "@/utils/smoothScroll";
 
 // Lazy load heavy components
 const Canvas = dynamic(
@@ -256,6 +257,7 @@ const Hero: FC = () => {
           >
             <motion.a
               href="/#about"
+              onClick={(e) => smoothScroll(e, "#about")}
               className="inline-flex items-center gap-2 px-8 py-4 text-lg font-medium text-white bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-full hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300"
               whileHover={{
                 scale: 1.05,
