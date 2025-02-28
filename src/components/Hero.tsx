@@ -230,7 +230,7 @@ const Hero: FC = () => {
               animate={{ scale: [1, 1.01, 1] }}
               transition={{ duration: 5, repeat: Infinity }}
             >
-              <span className="inline-block bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent animate-text-shimmer text-2xl sm:text-3xl md:text-4xl lg:text-5xl whitespace-nowrap">
+              <span className="inline-block bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 dark:from-blue-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent animate-text-shimmer">
                 Hi, I'm Christopher Mesaya
               </span>
             </motion.h1>
@@ -266,7 +266,7 @@ const Hero: FC = () => {
               <motion.a
                 href="/#about"
                 onClick={(e) => smoothScroll(e, "#about")}
-                className="inline-flex items-center gap-2 px-6 py-3 text-lg font-medium text-white bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-full hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300"
+                className="inline-flex items-center gap-2 px-6 py-3 text-lg font-medium text-white bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-full hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105"
                 whileHover={{
                   scale: 1.05,
                   boxShadow: "0 20px 25px -5px rgba(147, 51, 234, 0.25)",
@@ -285,7 +285,7 @@ const Hero: FC = () => {
                   <motion.a
                     key={social.label}
                     href={social.href}
-                    className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                    className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors transform hover:scale-110"
                     whileHover={{ scale: 1.1, rotate: 5 }}
                     whileTap={{ scale: 0.9 }}
                     initial={{ opacity: 0, x: -20 }}
