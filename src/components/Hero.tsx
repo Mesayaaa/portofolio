@@ -220,7 +220,13 @@ const Hero: FC = () => {
           >
             <motion.h1
               className="text-5xl sm:text-6xl md:text-7xl font-bold"
-              style={{ display: "inline-block", paddingBottom: "1rem" }}
+              style={{
+                display: "inline-block",
+                paddingBottom: "1rem",
+                lineHeight: "1.2",
+                minHeight: "2rem",
+                whiteSpace: "nowrap", // Prevent text from wrapping
+              }}
               animate={{ scale: [1, 1.01, 1] }}
               transition={{ duration: 5, repeat: Infinity }}
             >

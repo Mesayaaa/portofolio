@@ -86,6 +86,11 @@ const MemoizedSocialLink = memo(function SocialLink({
 
 MemoizedSocialLink.displayName = "MemoizedSocialLink";
 
+const menuVariants = {
+  hidden: { opacity: 0, y: -20 },
+  visible: { opacity: 1, y: 0 },
+};
+
 function Navbar({ navigationItems, socialLinks }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -117,11 +122,17 @@ function Navbar({ navigationItems, socialLinks }: NavbarProps) {
           </span>
 
           {/* Hamburger Menu for Mobile */}
-          <div className="md:hidden">
+          <motion.div
+            className="md:hidden"
+            initial="hidden"
+            animate={isMenuOpen ? "visible" : "hidden"}
+            variants={menuVariants}
+            transition={{ duration: 0.3 }}
+          >
             <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
               {isMenuOpen ? <FiX /> : <FiMenu />}
             </button>
-          </div>
+          </motion.div>
 
           {/* Navigation Links */}
           <div
@@ -130,13 +141,20 @@ function Navbar({ navigationItems, socialLinks }: NavbarProps) {
             }`}
           >
             {navigationItems.map((item) => (
-              <MemoizedLink
+              <motion.div
                 key={item.href}
-                href={item.href}
-                label={item.name}
-                isActive={item.href === "/"}
-                className="transition-transform duration-300 transform hover:scale-105"
-              />
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+              >
+                <MemoizedLink
+                  href={item.href}
+                  label={item.name}
+                  isActive={item.href === "/"}
+                  className="transition-transform duration-300 transform hover:scale-110"
+                />
+              </motion.div>
             ))}
           </div>
 
