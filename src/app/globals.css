@@ -130,6 +130,42 @@
     @apply text-foreground opacity-90 leading-relaxed;
     font-size: clamp(1rem, 1vw + 0.5rem, 1.125rem);
   }
+
+  /* Hide default cursor when SplashCursor is active */
+  .cursor-none {
+    cursor: none !important;
+  }
+  
+  /* Show default cursor for touch devices */
+  @media (hover: none) {
+    .cursor-none {
+      cursor: auto !important;
+    }
+  }
+
+  /* Ensure clickable elements show pointer cursor for accessibility */
+  .cursor-none a,
+  .cursor-none button,
+  .cursor-none [role="button"],
+  .cursor-none input[type="submit"],
+  .cursor-none input[type="button"],
+  .cursor-none input[type="reset"],
+  .cursor-none select {
+    cursor: none !important;
+  }
+
+  /* Restore default cursor for touch devices */
+  @media (hover: none) {
+    .cursor-none a,
+    .cursor-none button,
+    .cursor-none [role="button"],
+    .cursor-none input[type="submit"],
+    .cursor-none input[type="button"],
+    .cursor-none input[type="reset"],
+    .cursor-none select {
+      cursor: pointer !important;
+    }
+  }
 }
 
 @layer base {

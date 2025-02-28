@@ -2,6 +2,8 @@ import { Inter } from "next/font/google";
 import { Metadata } from "next";
 import "./globals.css";
 import { ClientLayout } from "./ClientLayout";
+import { SplashCursor } from "@/components/SplashCursor";
+import Providers from "@/components/Providers";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -36,9 +38,12 @@ export default function RootLayout({
           crossOrigin=""
         />
       </head>
-      <body className="relative font-sans antialiased bg-gradient-to-br from-background to-background/95">
+      <body className="relative font-sans antialiased bg-gradient-to-br from-background to-background/95 cursor-none">
         <div className="fixed inset-0 bg-grid-pattern opacity-[0.02] pointer-events-none" />
-        <ClientLayout>{children}</ClientLayout>
+        <Providers>
+          <SplashCursor />
+          <ClientLayout>{children}</ClientLayout>
+        </Providers>
       </body>
     </html>
   );
