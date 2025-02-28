@@ -35,24 +35,26 @@ const MemoizedLink = memo(function NavLink({
   };
 
   return (
-    <Link
-      href={href}
-      onClick={handleClick}
-      className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
-        isActive
-          ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20"
-          : "text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800/50"
-      } ${className || ""}`}
-    >
-      {label}
+    <div className="relative">
+      <Link
+        href={href}
+        onClick={handleClick}
+        className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
+          isActive
+            ? "text-blue-600 dark:text-blue-400"
+            : "text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+        } ${className || ""}`}
+      >
+        {label}
+      </Link>
       {isActive && (
         <motion.div
           layoutId="activeNavItem"
-          className="absolute -bottom-px left-0 right-0 h-0.5 bg-blue-600 dark:bg-blue-400"
+          className="absolute -bottom-1 left-0 right-0 h-0.5 bg-blue-600 dark:bg-blue-400"
           transition={{ type: "spring", stiffness: 380, damping: 30 }}
         />
       )}
-    </Link>
+    </div>
   );
 });
 
@@ -109,9 +111,9 @@ function Navbar({ navigationItems, socialLinks }: NavbarProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <span className="font-bold text-xl">Portfolio</span>
-          </Link>
+          <span className="flex items-center space-x-2 font-bold text-xl md:text-2xl lg:text-3xl">
+            Christopher Mesaya
+          </span>
 
           {/* Navigation Links */}
           <div className="hidden md:flex items-center space-x-8">
