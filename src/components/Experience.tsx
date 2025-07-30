@@ -128,7 +128,7 @@ export default function Experience() {
                   </span>
                 </div>
 
-                <ul className="space-y-2">
+                <ul className="space-y-2 text-left">
                   {experience.description.map((item, i) => (
                     <motion.li
                       key={i}
