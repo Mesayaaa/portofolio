@@ -1,9 +1,9 @@
+"use client";
 // Type for particle positions
 type ParticlePosition = {
   x: number;
   y: number;
 };
-("use client");
 
 import { memo, useState, useEffect } from "react";
 import { motion } from "framer-motion";
