@@ -1,6 +1,11 @@
-"use client";
+// Type for particle positions
+type ParticlePosition = {
+  x: number;
+  y: number;
+};
+("use client");
 
-import { memo } from "react";
+import { memo, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 interface LoadingScreenProps {
@@ -8,6 +13,20 @@ interface LoadingScreenProps {
 }
 
 function LoadingScreen({ progress }: LoadingScreenProps) {
+  // Store random positions for particles in state
+  const [particlePositions, setParticlePositions] = useState<
+    ParticlePosition[]
+  >([]);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setParticlePositions(
+        Array.from({ length: 5 }, () => ({
+          x: Math.random() * window.innerWidth,
+          y: Math.random() * window.innerHeight,
+        }))
+      );
+    }
+  }, []);
   return (
     <motion.div
       className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-background"
@@ -138,13 +157,14 @@ function LoadingScreen({ progress }: LoadingScreenProps) {
         />
 
         {/* Floating particles */}
-        {[...Array(5)].map((_, i) => (
+        {/* Fix: Only access window in client-side effect */}
+        {particlePositions.map((pos, i) => (
           <motion.div
             key={i}
             className="absolute w-2 h-2 rounded-full bg-primary/30"
             initial={{
-              x: Math.random() * window.innerWidth,
-              y: Math.random() * window.innerHeight,
+              x: pos.x,
+              y: pos.y,
             }}
             animate={{
               y: [0, -20, 0],
